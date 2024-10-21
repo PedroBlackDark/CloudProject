@@ -1,0 +1,25 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Control de deudas</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Principal</a></li>
+        <li><a href="deudores">Deudores</a></li>
+        <li><a href="deudas">Deudas</a></li>
+        <li><a href="abonos">Abonos</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <h3>Bienvenido al sistema para manejo de deudas</h3>
+  <h4>Este sistema tiene como finalidad llevar el control de deudas</h4>
+  <p>Aqui tendras diferentes opciones entre ellas:</p>
+  <ul>
+      <li>Registrar a tus deudores</li>
+      <li>Controlar las deudas vigentes</li>
+      <li>Tener un historial de sus abonos</li>
+  </ul>
+{% endblock %}

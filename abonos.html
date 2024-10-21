@@ -1,0 +1,46 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Control de deudas</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Principal</a></li>
+        <li><a href="deudores">Deudores</a></li>
+        <li><a href="deudas">Deudas</a></li>
+        <li class="active"><a href="#">Abonos</a></li>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+      <h3>Historial de Abonos</h3>
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th>Código deudor</th>
+                <th>Nombres deudor</th>
+                <th>Código deuda</th>
+                <th>Abono</th>
+                <th>Fecha abono</th>
+                <th>Descripción</th>
+                
+              </tr>
+            </thead>
+          {% for var in abonos %}
+          <tr>
+              <td>{{var.0}}</td>
+              <td>{{var.1}}</td>
+              <td>{{var.2}}</td>
+              <td>{{var.3}}</td>
+              <td>{{var.4}}</td>
+              <td>{{var.5}}</td>
+              
+
+          </tr>
+          {% endfor %}
+          
+      </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,250 @@
+{% extends "index.html" %}
+{% block body %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Control de deudas</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Principal</a></li>
+        <li><a href="deudores">Deudores</a></li>
+        <li class="active"><a href="#">Deudas</a></li>
+        <li><a href="abonos">Abonos</a></li>
+      </ul>
+    </div>
+  </nav>
+  <br>
+  <div class="container">
+      <h3>Deudas</h3>
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalnuevadeuda">Nueva deuda</button>
+      <!-- Modal -->
+      <form action = "deudores/nuevadeuda" method = "POST">
+      <div class="modal fade" id="modalnuevadeuda" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registrar deuda</h4>
+              </div>
+              <div class="modal-body">
+                <p>Ingrese los datos de la deuda.</p>
+              
+                <p>Deudor:</p>
+                
+                <select class="form-control" id="sel1">
+                  {% for var in deudas.1 %}
+                  <option>{{var.0}} - {{var.1}}</option>
+        
+                  {% endfor %}
+                </select>
+
+                
+                <p>Estado:</p>
+                <select class="form-control" id="sel1">
+                  <option>Pendiente</option>
+                  <option>Completado</option>
+                </select>
+
+                <p>Cantidad:</p>
+                <input class="form-control" type="text" name="cantidad" ></input>
+
+                <p>Motivo:</p>
+                <input class="form-control" type="text" name="motivo" ></input>
+              </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" value="submit" >Crear</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>   
+          </div>
+
+
+          </div>
+          
+        </div>
+      
+    </form>
+<br>
+<br>
+      <table class="table table-bordered">
+          <thead>
+              <tr>
+                <th>Código deuda</th>
+                <th>Cantidad deuda</th>
+                <th>Motivo deuda</th>
+                <th>Fecha creacion</th>
+                <th>Estado</th>
+                <th>Deudor</th>
+                <th>Codigo deudor</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+          {% for var in deudas.0 %}
+          <tr>
+              <td>{{var.0}}</td>
+              <td>{{var.1}}</td>
+              <td>{{var.2}}</td>
+              <td>{{var.3}}</td>
+              {% if var.4 == 1 %}
+             
+              <td>Pendiente</td>
+              
+              {% else %}
+              
+              <td>Completado</td>
+              
+              {% endif %}
+              
+              <td>{{var.6}}</td>
+              <td>{{var.5}}</td>
+              <td>
+                <div class="btn-group-vertical">
+                  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalabono{{var.0}}">Abonar</button>
+                
+                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalhistorico{{var.0}}">Historico</button>
+                  
+                  <button type="button" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#modaledit{{var.0}}">Editar</button>
+                  
+                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modaldelete{{var.0}}">Eliminar</button>
+                
+                </div>
+                  <!-- Modal -->
+
+                  <form action = "abonos/nuevoabono" method = "POST">
+                    <div class="modal fade" id="modalabono{{var.0}}" role="dialog">
+                      <div class="modal-dialog">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nuevo abono</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Registro de abono.</p>
+                            <p>Deudor:</p>
+                            <input class="form-control" type="text" name="iddeuda" value="{{var.5}} - {{var.6}}" ></input>                          
+                            <p>Abono:</p>
+                            <input class="form-control" type="text" name="nombres" ></input>
+                            <p>Descripcion:</p>
+                            <input class="form-control" type="text" name="nombres" ></input>
+                            
+
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" value="submit" >Actualizar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </form>  
+                  <div class="modal fade" id="modalhistorico{{var.0}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Historico abono</h4>
+                        </div>
+                        <div class="modal-body">
+
+                          
+
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary" value="submit" >Actualizar</button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                  <script type="text/javascript">
+                    $("#modalhistorico{{var.0}}").on("show.bs.modal", function(e) {
+                        var link = $(e.relatedTarget);
+                        $(this).find(".modal-body").load(link.attr("href"));
+                    });
+                   
+                  </script>
+                  <form action = "deudores/editar" method = "POST">
+                    <div class="modal fade" id="modaledit{{var.0}}" role="dialog">
+                      <div class="modal-dialog">
+                      
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Editar Deudor</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Editar deudor.</p>
+                            <p>IdDeuda:</p>
+                            <input class="form-control" type="text" name="iddeuda" value="{{var.0}}" ></input>                          
+                            <p>Motivo:</p>
+                            <input class="form-control" type="text" name="nombres" value="{{var.2}}"></input>
+                            <p>Cantidad:</p>
+                            <input class="form-control" type="text" name="nombres" value="{{var.1}}"></input>
+                            <p>Estado de deuda:</p>
+                            <select class="form-control" id="sel1">
+
+                              {% if var.4 == 1 %}
+                              <option  selected="selected">Pendiente</option>
+                              <option>Completado</option>
+                              {% else %}
+                              <option  >Pendiente</option>
+                              <option selected="selected">Completado</option>
+                              {% endif %}
+                            </select>            
+                            <p>Deudor:</p>
+                            <input class="form-control" type="text" name="nombres" value="{{var.5}} - {{var.6}}"></input>
+
+                          </div>
+
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" value="submit" >Actualizar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    </form>  
+                  
+                  
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="modaldelete{{var.0}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Advertencia</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Estas seguro de eliminar la deuda {{var.0}} de  {{var.1}} a "{{var.5}} - {{var.6}}"</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-primary" onClick="oncliceliminarpersona('{{var.0}}')" >Aceptar</button>
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+              </td>
+          </tr>
+          {% endfor %}
+          
+      </table>
+    </div>
+  </div>
+{% endblock %}
